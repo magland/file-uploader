@@ -4,6 +4,19 @@ var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
 
+//jfm ///////////////////////////////////////
+function usage() {
+	console.log('Usage: nodejs file-uploader.js [listen_port] [uploads_path]');
+}
+var args=process.argv.slice(2);
+var listen_port=args[0]||3000;
+var uploads_path=args[1]||'';
+if (!uploads_path) {
+	usage();
+	return;
+}
+/////////////////////////////////////////////
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
@@ -18,8 +31,8 @@ app.post('/upload', function(req, res){
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true;
 
-  // store all uploads in the /uploads directory
-  form.uploadDir = path.join(__dirname, '/uploads');
+  // store all uploads in the uploads directory
+  form.uploadDir = path.join(uploads_path);
 
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
@@ -42,6 +55,7 @@ app.post('/upload', function(req, res){
 
 });
 
-var server = app.listen(3000, function(){
-  console.log('Server listening on port 3000');
+var listen_port=3000;
+var server = app.listen(listen_port, function(){
+  console.log('Server listening on port '+listen_port+'. Uploads go to: '+uploads_path);
 });

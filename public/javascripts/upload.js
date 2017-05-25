@@ -28,7 +28,12 @@ $('#upload-input').on('change', function(){
       processData: false,
       contentType: false,
       success: function(data){
-          console.log('upload successful!\n' + data);
+          //console.log('upload successful!\n' + data);
+          $('.status2').html('Upload successful!');
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) { 
+        var txt="Error uploading file: " + textStatus+' '+errorThrown;
+        $('.status2').html(txt);
       },
       xhr: function() {
         // create an XMLHttpRequest
@@ -43,14 +48,18 @@ $('#upload-input').on('change', function(){
             percentComplete = parseInt(percentComplete * 100);
 
             // update the Bootstrap progress bar with the new percentage
+            var file_name=files[0].name;
+            var txt='Uploading: '+file_name;
+            $('.status').html(txt);
             $('.progress-bar').text(percentComplete + '%');
             $('.progress-bar').width(percentComplete + '%');
 
             // once the upload reaches 100%, set the progress bar text to done
             if (percentComplete === 100) {
               $('.progress-bar').html('Done');
+              var txt='Finished uploading: '+file_name;
+              $('.status').html(txt);
             }
-
           }
 
         }, false);
