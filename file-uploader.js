@@ -55,7 +55,6 @@ app.post('/upload', function(req, res){
 
 });
 
-var listen_port=3000;
 var server = app.listen(listen_port, function(){
   console.log('Server listening on port '+listen_port+'. Uploads go to: '+uploads_path);
 });
